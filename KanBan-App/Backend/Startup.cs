@@ -14,6 +14,12 @@ namespace Backend
     {
         public Startup(IHostingEnvironment env)
         {
+            ////using (var db = new DBContext())
+            ////{
+            ////    db.Database.EnsureCreated();
+            ////    db.Database.Migrate();
+            ////}
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
