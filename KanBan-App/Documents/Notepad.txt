@@ -1,0 +1,4 @@
+Arbeit: Arbeitszeit in Stunden
+Dauer: Gesamtdauer
+
+zB Wenn jemand nur eine Stunde am Tag arbeitet und der Task 4 Stunden dauert => Arbeit 4h, Dauer 4Tage
