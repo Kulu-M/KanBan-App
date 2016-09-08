@@ -1,6 +1,6 @@
 # KanBan-App
 
-## Bis Donnerstag:
+## Bis Donnerstag (08.09.2016):
 
 - Projektdefinition (detailiert)
 - Erstellung Projektstrukturplan -> Arbeitspakete aufteilen (Beschreibungen der Pakete)
