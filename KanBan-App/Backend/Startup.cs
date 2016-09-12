@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -42,7 +43,7 @@ namespace Backend
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
+            //services.AddEntityFrameworkSqlite().AddDbContext<APIAppDbContext>();
             services.AddMvc();
         }
 

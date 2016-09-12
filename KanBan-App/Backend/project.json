@@ -1,4 +1,4 @@
-﻿{
+{
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.0",
@@ -16,7 +16,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0",
-    "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final"
+    "Microsoft.EntityFrameworkCore.Design": "1.0.0-preview2-final",
+    "Microsoft.EntityFrameworkCore.Sqlite.Design": "1.0.0"
   },
 
 

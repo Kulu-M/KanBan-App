@@ -14,17 +14,17 @@ namespace Backend
         public static void Main(string[] args)
         {
             //Working Code to fill SQLite Database
-            using (var db = new BloggingContext())
+            using (var db = new APIAppDbContext())
             {
-                db.Blogs.Add(new Blog { Url = "http://blogs.msdn.com/adonet" });
+                db.User.Add(new User { EMail = "bla", Password = "bla2"});
                 var count = db.SaveChanges();
                 Console.WriteLine("{0} records saved to database", count);
 
                 Console.WriteLine();
-                Console.WriteLine("All blogs in database:");
-                foreach (var blog in db.Blogs)
+                Console.WriteLine("All Users in database:");
+                foreach (var user in db.User)
                 {
-                    Console.WriteLine(" - {0}", blog.Url);
+                    Console.WriteLine(" - {0}", user.EMail);
                 }
             }
 
