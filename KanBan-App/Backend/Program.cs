@@ -16,7 +16,7 @@ namespace Backend
             //Working Code to fill SQLite Database
             using (var db = new APIAppDbContext())
             {
-                db.User.Add(new User { EMail = "bla", Password = "bla2"});
+                db.User.Add(new User { EMail = "defaultMail", Password = "defaultPassword"});
                 var count = db.SaveChanges();
                 Console.WriteLine("{0} records saved to database", count);
 

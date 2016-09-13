@@ -9,16 +9,17 @@ namespace Backend.Models
     {
         public User()
         {
+            Board = new HashSet<Board>();
             Note = new HashSet<Note>();
         }
 
-        public long Id { get; set; }
-        [Required]
         [Column("eMail")]
         public string EMail { get; set; }
         public string Password { get; set; }
 
-        [InverseProperty("AppointedPerson")]
+        [InverseProperty("AdminNavigation")]
+        public virtual ICollection<Board> Board { get; set; }
+        [InverseProperty("AppointedPersonNavigation")]
         public virtual ICollection<Note> Note { get; set; }
     }
 }
