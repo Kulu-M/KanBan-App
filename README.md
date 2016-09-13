@@ -2,10 +2,7 @@
 
 ## Ressources for Development
 
-- Simple Erklärung von Routen (https://docs.asp.net/en/latest/tutorials/first-web-api.html)
-- .Net Core und SQLite durch EF verbinden (https://docs.efproject.net/en/latest/platforms/netcore/new-db-sqlite.html) && (http://stackoverflow.com/questions/36488461/sqlite-in-asp-net-core-with-entityframeworkcore)
-
-
+siehe Wiki
 
 
 ## Team To-Do
