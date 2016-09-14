@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Remotion.Linq.Clauses;
 
 namespace Backend.Controllers
 {
@@ -21,6 +23,36 @@ namespace Backend.Controllers
         public string Get(int id)
         {
             return id.ToString();
+        }
+
+        // GET api/values/getuser/-userMail-
+        [HttpGet("getuser/{eMail}")]
+        public string GetDatabaseUser(string eMail)
+        {
+            User resultUser;
+            using (var db = new APIAppDbContext())
+            {
+                resultUser = db.User.First(u => u.EMail == eMail);
+            }
+            return resultUser.Password;
+        }
+
+        // GET api/values/login/userMail-userPassword
+        [HttpGet("login/{eMail}-{password}")]
+        public string UserLogin(string eMail, string password)
+        {
+            User resultUser;
+            using (var db = new APIAppDbContext())
+            {
+                resultUser = db.User.FirstOrDefault(u => u.EMail == eMail);
+            }
+            if (resultUser == null) return "User not registered!";
+
+            if (resultUser.Password.Equals(password))
+            {
+                return "You are now logged in!";
+            }
+            return "Wrong password!";
         }
 
         // POST api/values

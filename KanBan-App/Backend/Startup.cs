@@ -58,6 +58,18 @@ namespace Backend
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
+
+            //app.UseMvc(r =>
+            //{
+            //    r.MapRoute(
+            //        name: "special-route",
+            //        template: "about",
+            //        defaults: new {controller = "Home", action = "About"});
+
+            //    r.MapRoute(
+            //    name: "default",
+            //    template: "{controller=Home}/{action=Index}");
+            //});
         }
     }
 }
