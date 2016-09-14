@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Authentification;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -62,15 +64,27 @@ namespace Backend.Controllers
         #region GET
 
         // GET api/board/
-        [HttpGet("all/")]
-        public IQueryable<Board> GetAllBoards()
+        [HttpGet("all/{eMail}-{key}")]
+        public string GetAllBoardsForSingleUser(string eMail, string key)
         {
-            IQueryable<Board> results;
+            //if (!User_Authentification.validateUserKey(eMail, key)) return null;
+
+            IQueryable<BoardUser> results;
+            List <BoardUser> boardList = new List<BoardUser>();
             using (var db = new APIAppDbContext())
             {
-                results = from boards in db.Board select boards;
-                if (!results.Any()) return null;
-                return results;
+                results = from boards in db.BoardUser where boards.UserId.Equals(eMail) select boards;
+                foreach (BoardUser board in results)
+                {
+                     boardList.Add(board);
+                }
+                if (!boardList.Any()) return null;
+
+                var json = JsonConvert.SerializeObject(new
+                {
+                    operations = boardList
+                });
+                return json;
             }
         }
 

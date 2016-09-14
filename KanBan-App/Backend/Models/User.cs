@@ -10,6 +10,7 @@ namespace Backend.Models
         public User()
         {
             Board = new HashSet<Board>();
+            BoardUser = new HashSet<BoardUser>();
             Note = new HashSet<Note>();
         }
 
@@ -20,6 +21,8 @@ namespace Backend.Models
 
         [InverseProperty("AdminNavigation")]
         public virtual ICollection<Board> Board { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<BoardUser> BoardUser { get; set; }
         [InverseProperty("AppointedPersonNavigation")]
         public virtual ICollection<Note> Note { get; set; }
     }
