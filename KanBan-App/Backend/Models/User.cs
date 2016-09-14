@@ -16,6 +16,7 @@ namespace Backend.Models
         [Column("eMail")]
         public string EMail { get; set; }
         public string Password { get; set; }
+        public string VerificationKey { get; set; }
 
         [InverseProperty("AdminNavigation")]
         public virtual ICollection<Board> Board { get; set; }

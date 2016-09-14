@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Authentification;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
-using Remotion.Linq.Clauses;
+
+// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Backend.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class UserController : Controller
     {
         #region EXAMPLES
 
@@ -61,7 +62,7 @@ namespace Backend.Controllers
 
         #region GET
 
-        // GET api/values/login/{eMail}-{password}
+        // GET api/user/login/{eMail}-{password}
         [HttpGet("login/{eMail}-{password}")]
         public string UserLogin(string eMail, string password)
         {
@@ -74,7 +75,8 @@ namespace Backend.Controllers
 
             if (resultUser.Password.Equals(password))
             {
-                return "You are now logged in!";
+                var newKey = User_Authentification.generateUserKey(eMail);
+                return newKey;
             }
             return "Wrong password!";
         }
@@ -83,7 +85,7 @@ namespace Backend.Controllers
 
         #region POST
 
-        // POST api/values/register/{eMail}-{password}
+        // POST api/user/register/{eMail}-{password}
         [HttpPost("register/{eMail}-{password}")]
         public string RegisterNewUser(string eMail, string password)
         {
@@ -111,10 +113,10 @@ namespace Backend.Controllers
         #region PUT
 
         #endregion PUT
-        
+
         #region DELETE
 
-        // DELETE api/values/5
+        // DELETE api/user/5
         [HttpDelete("{id}")]
         public void DeleteUserFromDatabase(int id)
         {
