@@ -12,7 +12,7 @@ namespace Backend.Authentification
         static readonly Random rnd = new Random();
 
         /// <summary>
-        /// Creates a new key and save to DB and returns the key
+        /// Creates a new key, saves it to DB and returns the key
         /// </summary>
         /// <param name="eMail"></param>
         /// <returns></returns>
@@ -29,7 +29,7 @@ namespace Backend.Authentification
         }
 
         /// <summary>
-        /// 
+        /// Valides a users key, returns boolean
         /// </summary>
         /// <param name="eMail"></param>
         /// <param name="key"></param>

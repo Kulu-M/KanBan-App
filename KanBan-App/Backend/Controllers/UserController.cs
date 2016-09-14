@@ -62,6 +62,18 @@ namespace Backend.Controllers
 
         #region GET
 
+        // GET api/user/all/
+        [HttpGet("all")]
+        public string GetUserCount()
+        {
+            var userCount = 0;
+            using (var db = new APIAppDbContext())
+            {
+                userCount = db.User.Count();
+            }
+            return userCount.ToString();
+        }
+
         // GET api/user/login/{eMail}-{password}
         [HttpGet("login/{eMail}-{password}")]
         public string UserLogin(string eMail, string password)
