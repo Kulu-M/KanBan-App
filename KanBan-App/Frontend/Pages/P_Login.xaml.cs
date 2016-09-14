@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,6 +27,58 @@ namespace Frontend
         public P_Login()
         {
             this.InitializeComponent();
+        }
+
+        private async void b_login_Click(object sender, RoutedEventArgs e)
+        {
+            string email = tbx_email.Text;
+            string pw = pb_pw.Password;
+
+            string result = await MyWebRequests.requestLogin(email, pw);
+
+            switch (result)
+            {
+                case "User not registered!":
+                case "Wrong password!":
+                    tblk_error.Text = result;
+                    tblk_error.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    App._VerificationKey = result;
+                    Frame.Navigate(typeof(P_MainPage));
+                    break;
+            }
+        }
+
+        private void tbx_email_and_pb_pw_TextChanged<T>(object sender, T e)
+        {
+            string changed = string.Empty;
+            string unchanged = string.Empty;
+            if (sender.GetType() == typeof(PasswordBox))
+            {
+                changed = (sender as PasswordBox).Password;
+                unchanged = tblk_login.Text;
+            }
+            else if (sender.GetType() == typeof(TextBox))
+            {
+                changed = (sender as TextBox).Text;
+                unchanged = pb_pw.Password;
+            }
+
+            if (changed != null && unchanged != null)
+            {
+                if (changed != string.Empty && unchanged != string.Empty)
+                {
+                    b_login.IsEnabled = true;
+                }
+                else b_login.IsEnabled = false;
+            }
+            else b_login.IsEnabled = false;
+        }
+
+        private void b_registrieren_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(P_Register));
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿<Page
-    x:Class="Frontend.P_Login"
+    x:Class="Frontend.P_Register"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Frontend"
+    xmlns:local="using:Frontend.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -21,14 +21,16 @@
         </Grid.RowDefinitions>
         <TextBlock x:Name="tblk_title" HorizontalAlignment="Left" Margin="20,0,0,0" Text="KanBan-App" FontSize="34" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1"/>
         <StackPanel Margin="20,100,20,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2">
-            <TextBlock x:Name="tblk_login" Margin="0,0,0,8" Text="Anmelden" FontSize="28"/>
-            <TextBlock x:Name="tblk_error" Foreground="Red" Margin="0,0,0,10" Visibility="Collapsed"/>
+            <TextBlock x:Name="tblk_register" Margin="0,0,0,8" Text="Registrieren" FontSize="28"/>
+            <TextBlock x:Name="tblk_error" Margin="0,0,0,10" Visibility="Collapsed"/>
             <TextBlock x:Name="tblk_email" Margin="0,0,0,10" Text="E-Mail" FontSize="22"/>
-            <TextBox x:Name="tbx_email" Margin="0,0,0,12" PlaceholderText="Bitte E-Mail eingeben" TextChanged="tbx_email_and_pb_pw_TextChanged"/>
+            <TextBox x:Name="tbx_email" Margin="0,0,0,12" PlaceholderText="Bitte E-Mail eingeben"/>
             <TextBlock x:Name="tblk_pw" Margin="0,0,0,8" Text="Passwort" FontSize="22"/>
-            <PasswordBox x:Name="pb_pw" Margin="0,0,0,10" PlaceholderText="Bitte Passwort eingeben." PasswordChanged="tbx_email_and_pb_pw_TextChanged"/>
-            <Button x:Name="b_login" Margin="0,0,0,10" Content="Anmelden" HorizontalAlignment="Stretch" Click="b_login_Click" IsEnabled="False"/>
+            <PasswordBox x:Name="pb_pw" Margin="0,0,0,10" PlaceholderText="Bitte Passwort eingeben."/>
+            <TextBlock x:Name="tblk_pwwdh" Margin="0,0,0,8" Text="Passwort wiederholen" FontSize="22"/>
+            <PasswordBox x:Name="pb_pwwdh" Margin="0,0,0,10" PlaceholderText="Bitte Passwort eingeben."/>
             <Button x:Name="b_registrieren" Content="Registrieren" HorizontalAlignment="Stretch" Click="b_registrieren_Click"/>
         </StackPanel>
     </Grid>
+
 </Page>
