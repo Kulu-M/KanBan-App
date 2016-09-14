@@ -15,12 +15,6 @@ namespace Backend
     {
         public Startup(IHostingEnvironment env)
         {
-            ////using (var db = new DBContext())
-            ////{
-            ////    db.Database.EnsureCreated();
-            ////    db.Database.Migrate();
-            ////}
-
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -43,7 +37,6 @@ namespace Backend
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            //services.AddEntityFrameworkSqlite().AddDbContext<APIAppDbContext>();
             services.AddMvc();
         }
 
@@ -58,18 +51,6 @@ namespace Backend
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseMvc();
-
-            //app.UseMvc(r =>
-            //{
-            //    r.MapRoute(
-            //        name: "special-route",
-            //        template: "about",
-            //        defaults: new {controller = "Home", action = "About"});
-
-            //    r.MapRoute(
-            //    name: "default",
-            //    template: "{controller=Home}/{action=Index}");
-            //});
         }
     }
 }
