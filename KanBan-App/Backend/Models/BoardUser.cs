@@ -12,10 +12,13 @@ namespace Backend.Models
         [Key]
         public long BoardId { get; set; }
         [Column("UserID")]
-        public long? UserId { get; set; }
+        public string UserId { get; set; }
 
         [ForeignKey("BoardId")]
         [InverseProperty("BoardUser")]
         public virtual Board Board { get; set; }
+        [ForeignKey("UserId")]
+        [InverseProperty("BoardUser")]
+        public virtual User User { get; set; }
     }
 }
