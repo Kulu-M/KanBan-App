@@ -36,6 +36,10 @@ namespace Backend.Authentification
         /// <returns></returns>
         public static bool validateUserKey(string eMail, string key)
         {
+            #if DEBUG
+            return true;
+            #endif
+
             var keyIsTheSame = false;
             using (var db = new APIAppDbContext())
             {
