@@ -63,57 +63,65 @@ namespace Backend.Controllers
 
         #region GET
 
-        // GET api/board/
-        [HttpGet("all/{eMail}-{key}")]
-        public string GetAllBoardsForSingleUser(string eMail, string key)
-        {
-            //if (!User_Authentification.validateUserKey(eMail, key)) return null;
+        // GET api/board/all/{eMail}-{key}
+        //[HttpGet("all/{eMail}-{key}")]
+        //public string GetAllBoardsForSingleUser(string eMail, string key)
+        //{
+        //    //if (!User_Authentification.validateUserKey(eMail, key)) return null;
 
-            IQueryable<BoardUser> results;
-            List <BoardUser> boardList = new List<BoardUser>();
+        //    IQueryable<BoardUser> results;
+        //    var boardList = new List<BoardUser>();
+        //    using (var db = new APIAppDbContext())
+        //    {
+        //        results = from boards in db.BoardUser where boards.UserId.Equals(eMail) select boards;
+        //        foreach (var board in results)
+        //        {
+        //             boardList.Add(board);
+        //        }
+        //        if (!boardList.Any()) return null;
+
+        //        var json = JsonConvert.SerializeObject(new
+        //        {
+        //            operations = boardList
+        //        });
+        //        return json;
+        //    }
+        //}
+
+        // GET api/board/notes/{boardId}/{eMail}-{key}
+        [HttpGet("notes/{boardId}/{eMail}-{key}")]
+        public string GetAllNotesFromBoard(long boardId, string eMail, string key)
+        {
+            if (!User_Authentification.validateUserKey(eMail, key)) return null;
+
+            List<Note> noteList = new List<Note>();
+
             using (var db = new APIAppDbContext())
             {
-                results = from boards in db.BoardUser where boards.UserId.Equals(eMail) select boards;
-                foreach (BoardUser board in results)
-                {
-                     boardList.Add(board);
-                }
-                if (!boardList.Any()) return null;
+                noteList.AddRange(db.Note.Where(note => note.BoardId == boardId));
 
-                var json = JsonConvert.SerializeObject(new
-                {
-                    operations = boardList
-                });
-                return json;
+                return JsonConvert.SerializeObject(noteList);
             }
+        }
+
+        // GET api/board/users/{boardId}/{eMail}-{key}
+        [HttpGet("users/{boardId}/{eMail}-{key}")]
+        public string GetAllUsersFromBoard(long boardId, string eMail, string key)
+        {
+            if (!User_Authentification.validateUserKey(eMail, key)) return null;
+
+            var userEmailList = new List<string>();
+            using (var db = new APIAppDbContext())
+            {
+                userEmailList = (from userIds in db.BoardUser where userIds.BoardId == boardId select userIds.UserEMail).ToList();
+            }
+
+            return JsonConvert.SerializeObject(userEmailList);
         }
 
         #endregion GET
 
         #region POST
-
-        // POST api/board/create/{}-{password}
-        [HttpPost("register/{eMail}-{password}")]
-        public string RegisterNewUser(string eMail, string password)
-        {
-            var existingUser = new User();
-            using (var db = new APIAppDbContext())
-            {
-                existingUser = db.User.FirstOrDefault(u => u.EMail == eMail);
-            }
-            if (existingUser != null) return "User already exists!";
-            using (var db = new APIAppDbContext())
-            {
-                var newUser = new User
-                {
-                    EMail = eMail,
-                    Password = password
-                };
-                db.User.Add(newUser);
-                db.SaveChanges();
-            }
-            return "You are now registered!";
-        }
 
         #endregion POST
 
@@ -122,12 +130,6 @@ namespace Backend.Controllers
         #endregion PUT
 
         #region DELETE
-
-        // DELETE api/user/5
-        [HttpDelete("{id}")]
-        public void DeleteUserFromDatabase(int id)
-        {
-        }
 
         #endregion DELETE
     }
