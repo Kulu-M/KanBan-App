@@ -8,17 +8,19 @@ namespace Backend.Models
     [Table("Board_User")]
     public partial class BoardUser
     {
-        [Column("BoardID")]
-        [Key]
+        [Column("PK")]
+        public long Pk { get; set; }
+        [Column("Board_ID")]
         public long BoardId { get; set; }
-        [Column("UserID")]
-        public string UserId { get; set; }
+        [Required]
+        [Column("User_eMail")]
+        public string UserEMail { get; set; }
 
         [ForeignKey("BoardId")]
         [InverseProperty("BoardUser")]
         public virtual Board Board { get; set; }
-        [ForeignKey("UserId")]
+        [ForeignKey("UserEMail")]
         [InverseProperty("BoardUser")]
-        public virtual User User { get; set; }
+        public virtual User UserEMailNavigation { get; set; }
     }
 }

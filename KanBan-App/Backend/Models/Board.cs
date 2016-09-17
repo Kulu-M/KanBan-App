@@ -7,15 +7,21 @@ namespace Backend.Models
 {
     public partial class Board
     {
+        public Board()
+        {
+            BoardUser = new HashSet<BoardUser>();
+            Note = new HashSet<Note>();
+        }
+
         [Column("ID")]
         public long Id { get; set; }
         public string Admin { get; set; }
         public string Name { get; set; }
 
         [InverseProperty("Board")]
-        public virtual BoardNote BoardNote { get; set; }
+        public virtual ICollection<BoardUser> BoardUser { get; set; }
         [InverseProperty("Board")]
-        public virtual BoardUser BoardUser { get; set; }
+        public virtual ICollection<Note> Note { get; set; }
         [ForeignKey("Admin")]
         [InverseProperty("Board")]
         public virtual User AdminNavigation { get; set; }

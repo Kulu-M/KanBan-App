@@ -21,7 +21,7 @@ namespace Backend.Models
 
         [InverseProperty("AdminNavigation")]
         public virtual ICollection<Board> Board { get; set; }
-        [InverseProperty("User")]
+        [InverseProperty("UserEMailNavigation")]
         public virtual ICollection<BoardUser> BoardUser { get; set; }
         [InverseProperty("AppointedPersonNavigation")]
         public virtual ICollection<Note> Note { get; set; }

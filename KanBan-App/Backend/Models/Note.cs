@@ -9,7 +9,6 @@ namespace Backend.Models
     {
         public Note()
         {
-            BoardNote = new HashSet<BoardNote>();
             UserNote = new HashSet<UserNote>();
         }
 
@@ -18,13 +17,15 @@ namespace Backend.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string AppointedPerson { get; set; }
+        public long? BoardId { get; set; }
 
-        [InverseProperty("Note")]
-        public virtual ICollection<BoardNote> BoardNote { get; set; }
         [InverseProperty("Note")]
         public virtual ICollection<UserNote> UserNote { get; set; }
         [ForeignKey("AppointedPerson")]
         [InverseProperty("Note")]
         public virtual User AppointedPersonNavigation { get; set; }
+        [ForeignKey("BoardId")]
+        [InverseProperty("Note")]
+        public virtual Board Board { get; set; }
     }
 }
