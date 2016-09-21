@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Backend.Authentification;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -88,37 +91,43 @@ namespace Backend.Controllers
             return JsonConvert.SerializeObject(userList);
         }
 
-        // GET api/user/login/{eMail}-{password}
-        [HttpGet("login/{eMail}-{password}")]
-        public string UserLogin(string eMail, string password)
+        #endregion GET
+
+        #region POST
+
+        // POST api/user/login
+        [HttpPost("login/")]
+        public string UserLogin([FromBody]JObject value)
         {
+            var username = value.First.Last.ToString();
+            var password = value.Last.Last.ToString();
+
             var resultUser = new User();
             using (var db = new APIAppDbContext())
             {
-                resultUser = db.User.FirstOrDefault(u => u.EMail == eMail);
+                resultUser = db.User.FirstOrDefault(u => u.EMail == username);
             }
             if (resultUser == null) return "User not registered!";
 
             //TODO Hash/Salt password
             if (resultUser.Password.Equals(password))
             {
-                return User_Authentification.generateUserKey(eMail);
+                return User_Authentification.generateUserKey(username);
             }
             return "Wrong password!";
         }
 
-        #endregion GET
-
-        #region POST
-
-        // POST api/user/register/{eMail}-{password}
-        [HttpPost("register/{eMail}-{password}")]
-        public string RegisterNewUser(string eMail, string password)
+        // POST api/user/register/
+        [HttpPost("register/")]
+        public string RegisterNewUser([FromBody]JObject value)
         {
+            var username = value.First.Last.ToString();
+            var password = value.Last.Last.ToString();
+
             var existingUser = new User();
             using (var db = new APIAppDbContext())
             {
-                existingUser = db.User.FirstOrDefault(u => u.EMail == eMail);
+                existingUser = db.User.FirstOrDefault(u => u.EMail == username);
             }
             if (existingUser != null) return "User already exists!";
 
@@ -127,7 +136,7 @@ namespace Backend.Controllers
             {
                 var newUser = new User
                 {
-                    EMail = eMail,
+                    EMail = username,
                     Password = password
                 };
                 db.User.Add(newUser);
@@ -135,9 +144,7 @@ namespace Backend.Controllers
             }
             return "You are now registered!";
         }
-
-
-
+        
         #endregion POST
 
         #region PUT
@@ -146,20 +153,22 @@ namespace Backend.Controllers
 
         #region DELETE
 
-        // GET api/user/delete/{eMail}-{password}
-        [HttpGet("delete/{eMail}-{password}")]
-        public string DeleteUser(string eMail, string password)
+        // DELETE api/user/delete/
+        [HttpDelete("delete/")]
+        public string DeleteUser([FromBody]JObject value)
         {
+            //TODO delete foreign keys first
+
+            var username = value.First.Last.ToString();
+            var password = value.Last.Last.ToString();
+
             try
             {
                 var existingUser = new User();
                 using (var db = new APIAppDbContext())
                 {
-                    //delete from 
-
-
                     //delete from user table
-                    existingUser = db.User.FirstOrDefault(u => u.EMail == eMail);
+                    existingUser = db.User.FirstOrDefault(u => u.EMail == username);
                     if (existingUser == null) return "Error!";
                     db.User.Remove(existingUser);
                     db.SaveChanges();
