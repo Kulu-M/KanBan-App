@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -93,11 +94,11 @@ namespace Frontend
             {
                 data = streamReader.ReadToEnd();
             }
-
             var test = JsonConvert.DeserializeObject(data);
             
             lbx_boards.ItemsSource = test;
 
+            lbx_boards.DisplayMemberPath = "[0][0]";
 
         }
     }
