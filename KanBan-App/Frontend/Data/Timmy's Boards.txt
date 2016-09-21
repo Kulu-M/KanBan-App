@@ -1,8 +1,8 @@
 ﻿[	{
-		"ID" : "Kaffeeklatsch",
+		"ID" : "Kaffeeklatsch"
 	},
 	{
-		"ID" : "SRH Lesezirkel",
+		"ID" : "SRH Lesezirkel"
 	},
 	{
 		"ID" : "Blubb"
