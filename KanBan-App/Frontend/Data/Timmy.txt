@@ -1,0 +1,4 @@
+﻿{
+	"email" : "Timmy@web.de",
+	"verificationKey" : "c4t2o3nor1"
+}

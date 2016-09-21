@@ -1,0 +1,10 @@
+﻿[	{
+		"ID" : "Kaffeeklatsch",
+	},
+	{
+		"ID" : "SRH Lesezirkel",
+	},
+	{
+		"ID" : "Blubb"
+	}
+]

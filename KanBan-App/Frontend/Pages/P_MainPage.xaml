@@ -5,10 +5,43 @@
     xmlns:local="using:Frontend.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
+    mc:Ignorable="d" Loaded="Page_Loaded">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Resources>
+                <Style TargetType="AppBarButton">
+                    <Setter Property="Margin" Value="15,0"/>
+                </Style>
+            </CommandBar.Resources>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Ausloggen"/>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton Name="abb_select" Icon="Accept" Label="Auswählen"/>
+            <AppBarButton Name="abb_delete" Icon="Delete" Label="Löschen" Click="abb_delete_Click"/>
+            <AppBarButton Name="abb_add" Icon="Add" Label="Hinzufügen"/>
+        </CommandBar>
+    </Page.BottomAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Text="IN DEVELOPEMENT" FontSize="72" VerticalAlignment="Center"/>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tblk_title" HorizontalAlignment="Left" Margin="20,0,0,0" Text="KanBan-App" FontSize="34" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1"/>
+        <TextBlock Name="tblk_subtitle" Grid.Column="1" Grid.Row="2" Text="Board auswählen:" FontSize="22" Margin="20,10,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="lbx_boards" Grid.Column="1" Grid.Row="2" Margin="20,50">
+            <ListBox.Resources>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="50"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListBox.Resources>
+            <ListBoxItem Content="hahahaha"/>
+        </ListBox>
     </Grid>
 </Page>

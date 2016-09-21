@@ -33,18 +33,29 @@ namespace Frontend
         {
             string email = tbx_email.Text;
             string pw = pb_pw.Password;
+            string result = string.Empty;
 
-            string result = await MyWebRequests.requestLogin(email, pw);
+            try
+            {
+
+                result = await MyWebRequests.requestLogin(email, pw);
+
+            }
+            catch (Exception ex)
+            {
+                tblk_error.Text = ex.Message;
+                return;
+            }
 
             switch (result)
             {
                 case "User not registered!":
                 case "Wrong password!":
                     tblk_error.Text = result;
-                    tblk_error.Visibility = Visibility.Visible;
                     break;
                 default:
                     App._VerificationKey = result;
+                    App._Email = email;
                     Frame.Navigate(typeof(P_MainPage));
                     break;
             }
