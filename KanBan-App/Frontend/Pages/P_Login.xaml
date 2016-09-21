@@ -17,12 +17,11 @@
             <RowDefinition Height="20"/>
             <RowDefinition Height="60"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="tblk_title" HorizontalAlignment="Left" Margin="20,0,0,0" Text="KanBan-App" FontSize="34" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1"/>
         <StackPanel Margin="20,100,20,0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2">
             <TextBlock x:Name="tblk_login" Margin="0,0,0,8" Text="Anmelden" FontSize="28"/>
-            <TextBlock x:Name="tblk_error" Foreground="Red" Margin="0,0,0,10" Visibility="Collapsed"/>
+            <TextBlock x:Name="tblk_error" TextWrapping="Wrap" Foreground="Red" Margin="0,0,0,10"/>
             <TextBlock x:Name="tblk_email" Margin="0,0,0,10" Text="E-Mail" FontSize="22"/>
             <TextBox x:Name="tbx_email" Margin="0,0,0,12" PlaceholderText="Bitte E-Mail eingeben" TextChanged="tbx_email_and_pb_pw_TextChanged"/>
             <TextBlock x:Name="tblk_pw" Margin="0,0,0,8" Text="Passwort" FontSize="22"/>

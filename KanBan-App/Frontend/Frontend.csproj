@@ -95,8 +95,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\MyWebRequests.cs" />
     <Compile Include="Pages\P_Login.xaml.cs">
       <DependentUpon>P_Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\P_MainPage.xaml.cs">
+      <DependentUpon>P_MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\P_Register.xaml.cs">
+      <DependentUpon>P_Register.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -107,6 +114,9 @@
     <None Include="Frontend_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\BoardWithTimmyAsAdmin.txt" />
+    <Content Include="Data\Timmy%27s Boards.txt" />
+    <Content Include="Data\Timmy.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -125,7 +135,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\P_MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\P_Register.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

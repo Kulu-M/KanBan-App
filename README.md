@@ -26,3 +26,11 @@ siehe Wiki
 - Rechner fertig einrichten zum Entwickeln
 - Datenbankmodell umsetzen
 - Erste UIs umsetzen
+ 
+### Bis vor Abgabe (30.09.2016)
+
+- Fragenkatalog bearbeiten
+- Arbeitspakete ausführlich beschreiben
+- Gantt ändern wg. Umstellung der Entwicklung und mehr Zeit durch VL
+- Prototyp läuffähig
+
