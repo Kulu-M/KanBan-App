@@ -6,6 +6,7 @@ using Backend.Authentification;
 using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -63,52 +64,66 @@ namespace Backend.Controllers
 
         #region GET
 
-        // GET api/board/all/{eMail}-{key}
-        //[HttpGet("all/{eMail}-{key}")]
-        //public string GetAllBoardsForSingleUser(string eMail, string key)
-        //{
-        //    //if (!User_Authentification.validateUserKey(eMail, key)) return null;
-
-        //    IQueryable<BoardUser> results;
-        //    var boardList = new List<BoardUser>();
-        //    using (var db = new APIAppDbContext())
-        //    {
-        //        results = from boards in db.BoardUser where boards.UserId.Equals(eMail) select boards;
-        //        foreach (var board in results)
-        //        {
-        //             boardList.Add(board);
-        //        }
-        //        if (!boardList.Any()) return null;
-
-        //        var json = JsonConvert.SerializeObject(new
-        //        {
-        //            operations = boardList
-        //        });
-        //        return json;
-        //    }
-        //}
-
-        // GET api/board/notes/{boardId}/{eMail}-{key}
-        [HttpGet("notes/{boardId}/{eMail}-{key}")]
-        public string GetAllNotesFromBoard(long boardId, string eMail, string key)
+        // GET api/board/all/
+        [HttpGet("all/")]
+        public string GetAllBoardsForSingleUser()
         {
-            if (!User_Authentification.validateUserKey(eMail, key)) return null;
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
 
-            List<Note> noteList = new List<Note>();
+            //if (!User_Authentification.validateUserKey(username, key)) return null;
+
+            IQueryable<string> results;
+            var boardList = new List<string>();
+            using (var db = new APIAppDbContext())
+            {
+                results = from boards in db.BoardUser where boards.UserEMail.Equals(username) select boards.Board.Name;
+                foreach (var board in results)
+                {
+                    boardList.Add(board);
+                }
+                if (!boardList.Any()) return null;
+
+                var json = JsonConvert.SerializeObject(new
+                {
+                    Boards = boardList
+                });
+                return json;
+            }
+        }
+
+        #endregion GET
+
+        #region POST
+
+        // POST api/board/notes/
+        [HttpPost("notes/")]
+        public string GetAllNotesFromBoard([FromBody]JObject value)
+        {
+            var username = value.SelectToken("user").SelectToken("email").ToString();
+            var password = value.SelectToken("user").SelectToken("pw").ToString();
+            var boardId = Int64.Parse(value.SelectToken("content").SelectToken("boardId").ToString());
+
+            //if (!User_Authentification.validateUserKey(eMail, key)) return null;
+
+            var noteList = new List<Note>();
 
             using (var db = new APIAppDbContext())
             {
                 noteList.AddRange(db.Note.Where(note => note.BoardId == boardId));
-
                 return JsonConvert.SerializeObject(noteList);
             }
         }
 
-        // GET api/board/users/{boardId}/{eMail}-{key}
-        [HttpGet("users/{boardId}/{eMail}-{key}")]
-        public string GetAllUsersFromBoard(long boardId, string eMail, string key)
+        // POST api/board/users/
+        [HttpPost("users/")]
+        public string GetAllUsersFromBoard([FromBody]JObject value)
         {
-            if (!User_Authentification.validateUserKey(eMail, key)) return null;
+            var username = value.SelectToken("user").SelectToken("email").ToString();
+            var password = value.SelectToken("user").SelectToken("pw").ToString();
+            var boardId = Int64.Parse(value.SelectToken("content").SelectToken("boardId").ToString());
+
+            //if (!User_Authentification.validateUserKey(username, password)) return null;
 
             var userEmailList = new List<string>();
             using (var db = new APIAppDbContext())
@@ -118,10 +133,6 @@ namespace Backend.Controllers
 
             return JsonConvert.SerializeObject(userEmailList);
         }
-
-        #endregion GET
-
-        #region POST
 
         #endregion POST
 
