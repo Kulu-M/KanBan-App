@@ -95,6 +95,25 @@ namespace Backend.Controllers
         #endregion GET
 
         #region POST
+        
+        // POST api/board/note/create
+        [HttpPost("note/create")]
+        public string CreateNoteInBoard([FromBody]JObject value)
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+
+            var jsonNote = JsonConvert.DeserializeObject<Note>(value.ToString());
+
+            using (var db = new APIAppDbContext())
+            {
+                db.Note.Add(jsonNote);
+                db.SaveChanges();
+                return JsonConvert.SerializeObject(getAllNotesByBoardID(jsonNote.BoardId));
+            }
+        }
 
         // POST api/board/notes/
         [HttpPost("notes/")]
@@ -104,18 +123,23 @@ namespace Backend.Controllers
             var password = value.SelectToken("user").SelectToken("pw").ToString();
             var boardId = Int64.Parse(value.SelectToken("content").SelectToken("boardId").ToString());
 
-            //if (!User_Authentification.validateUserKey(eMail, key)) return null;
+            if (!User_Authentification.validateUserKey(username, password)) return null;
 
+            return JsonConvert.SerializeObject(getAllNotesByBoardID(boardId));
+        }
+
+        public List<Note> getAllNotesByBoardID(long? boardId)
+        {
             var noteList = new List<Note>();
-
             using (var db = new APIAppDbContext())
             {
                 noteList.AddRange(db.Note.Where(note => note.BoardId == boardId));
-                return JsonConvert.SerializeObject(noteList);
+                return noteList;
             }
         }
 
-        // POST api/board/users/
+
+            // POST api/board/users/
         [HttpPost("users/")]
         public string GetAllUsersFromBoard([FromBody]JObject value)
         {

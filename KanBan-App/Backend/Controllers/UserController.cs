@@ -122,8 +122,8 @@ namespace Backend.Controllers
         [HttpPost("register/")]
         public string RegisterNewUser([FromBody]JObject value)
         {
-            var username = value.SelectToken("email").ToString();
-            var password = value.SelectToken("pw").ToString();
+            var username = value.SelectToken("EMail").ToString();
+            var password = value.SelectToken("Password").ToString();
 
             var existingUser = new User();
             using (var db = new APIAppDbContext())
