@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -53,7 +54,7 @@ namespace Frontend
 
                 if (result)
                 {
-                    var dialog = new MessageDialog("Möchten Sie \"" + (lbx_boards.SelectedValue as ListBoxItem).Content + "\" wirklich löschen?","Sind Sie sicher?");
+                    var dialog = new MessageDialog("Möchten Sie \"" + (lbx_boards.SelectedItem as JObject).GetValue("ID") + "\" wirklich löschen?","Sind Sie sicher?");
 
                     dialog.Commands.Add(new UICommand("Ja", new UICommandInvokedHandler(CommandInvokeHandler)) { Id = 0 });
                     dialog.Commands.Add(new UICommand("Nein") { Id = 1 });

@@ -96,11 +96,21 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\BoardRequests.cs" />
+    <Compile Include="Classes\MyConverters.cs" />
     <Compile Include="Classes\MyWebRequests.cs" />
     <Compile Include="Classes\UserRequests.cs" />
     <Compile Include="Model\Board.cs" />
     <Compile Include="Model\Note.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Pages\BoardView\D_ToDo-Assign.xaml.cs">
+      <DependentUpon>D_ToDo-Assign.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeamManagement\D_AddUserToBoard.xaml.cs">
+      <DependentUpon>D_AddUserToBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BoardView\P_BoardView.xaml.cs">
+      <DependentUpon>P_BoardView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\P_Login.xaml.cs">
       <DependentUpon>P_Login.xaml</DependentUpon>
     </Compile>
@@ -110,11 +120,11 @@
     <Compile Include="Pages\P_Register.xaml.cs">
       <DependentUpon>P_Register.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TeamManagement\D_AddUserToBoard.xaml.cs">
-      <DependentUpon>D_AddUserToBoard.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\TeamManagement\P_TeamManagement.xaml.cs">
       <DependentUpon>P_TeamManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\P_TicketView.xaml.cs">
+      <DependentUpon>P_TicketView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -142,6 +152,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Pages\BoardView\D_ToDo-Assign.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TeamManagement\D_AddUserToBoard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\BoardView\P_BoardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\P_Login.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,11 +176,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\TeamManagement\D_AddUserToBoard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\TeamManagement\P_TeamManagement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\P_TicketView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
