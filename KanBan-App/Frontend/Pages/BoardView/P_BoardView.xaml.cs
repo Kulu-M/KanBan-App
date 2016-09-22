@@ -104,5 +104,10 @@ namespace Frontend
             var dialog = new D_ToDo_Assign();
             await dialog.ShowAsync();
         }
+
+        private void abb_viewDone_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(P_TicketView), lbx_done.SelectedItem);
+        }
     }
 }

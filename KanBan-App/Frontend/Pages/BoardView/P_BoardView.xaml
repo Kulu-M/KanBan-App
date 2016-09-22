@@ -24,7 +24,7 @@
             <AppBarButton Name="abb_register" Icon="Edit" Label="Registrieren" Click="abb_register_Click"/>
             <AppBarButton Name="abb_view" Icon="Find" Label="Ansehen" Click="abb_view_Click"/>
             <AppBarButton Name="abb_assign" Icon="Go" Label="Zuweisen" Click="abb_assign_Click"/>
-            <AppBarButton Name="abb_viewDone" Icon="Find" Label="Ansehen"/>
+            <AppBarButton Name="abb_viewDone" Icon="Find" Label="Ansehen" Click="abb_viewDone_Click"/>
             <AppBarButton Name="abb_archive" Icon="Go" Label="Archivieren"/>
         </CommandBar>
     </Page.BottomAppBar>
