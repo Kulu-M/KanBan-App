@@ -1,8 +1,8 @@
 ﻿<Page
-    x:Class="Frontend.Pages.P_TeamManagement"
+    x:Class="Frontend.P_TeamManagement"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Frontend.Pages"
+    xmlns:local="using:Frontend"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -16,12 +16,12 @@
             </CommandBar.Resources>
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="Ausloggen"/>
-                <AppBarButton Label="Gruppe verlassen"/>
-                <AppBarButton Label="Gruppe auflösen"/>
+                <AppBarButton x:Name="abb_leaveGroup" Label="Gruppe verlassen" Click="abb_leaveGroup_Click" />
+                <AppBarButton x:Name="abb_deleteGroupd" Label="Gruppe auflösen" Click="abb_deleteGroupd_Click"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton Name="abb_add" Icon="Add" Label="Hinzufügen" Click="abb_add_Click"/>
-            <AppBarButton Name="abb_delete" Icon="Delete" Label="Löschen"/>
-            <AppBarButton Name="abb_select" Label="Gruppenleiter ernenne" Icon="Admin"/>
+            <AppBarButton Name="abb_delete" Icon="Delete" Label="Löschen" Click="abb_delete_Click"/>
+            <AppBarButton Name="abb_select" Label="Gruppenleiter ernenne" Icon="Admin" Click="abb_select_Click"/>
 
         </CommandBar>
     </Page.BottomAppBar>
