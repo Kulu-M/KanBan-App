@@ -85,6 +85,7 @@ namespace Backend.Controllers
             {
                 foreach (var user in db.User)
                 {
+                    user.Password = "";
                     userList.Add(user);
                 }
             }
@@ -99,9 +100,9 @@ namespace Backend.Controllers
         [HttpPost("login/")]
         public string UserLogin([FromBody]JObject value)
         {
-            var username = value.First.Last.ToString();
-            var password = value.Last.Last.ToString();
-
+            var username = value.SelectToken("email").ToString();
+            var password = value.SelectToken("pw").ToString();
+  
             var resultUser = new User();
             using (var db = new APIAppDbContext())
             {
@@ -121,8 +122,8 @@ namespace Backend.Controllers
         [HttpPost("register/")]
         public string RegisterNewUser([FromBody]JObject value)
         {
-            var username = value.First.Last.ToString();
-            var password = value.Last.Last.ToString();
+            var username = value.SelectToken("email").ToString();
+            var password = value.SelectToken("pw").ToString();
 
             var existingUser = new User();
             using (var db = new APIAppDbContext())

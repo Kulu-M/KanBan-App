@@ -112,7 +112,10 @@
     <Compile Include="Pages\P_Register.xaml.cs">
       <DependentUpon>P_Register.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\P_TeamManagement.xaml.cs">
+    <Compile Include="Pages\TeamManagement\D_AddUserToBoard.xaml.cs">
+      <DependentUpon>D_AddUserToBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TeamManagement\P_TeamManagement.xaml.cs">
       <DependentUpon>P_TeamManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,7 +160,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\P_TeamManagement.xaml">
+    <Page Include="Pages\TeamManagement\D_AddUserToBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TeamManagement\P_TeamManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
