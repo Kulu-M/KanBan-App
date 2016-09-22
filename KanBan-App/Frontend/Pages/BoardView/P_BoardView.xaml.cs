@@ -99,9 +99,10 @@ namespace Frontend
             Frame.Navigate(typeof(P_TicketView), lbx_inProgress.SelectedItem);
         }
 
-        private void abb_assign_Click(object sender, RoutedEventArgs e)
+        private async void abb_assign_Click(object sender, RoutedEventArgs e)
         {
-            
+            var dialog = new D_ToDo_Assign();
+            await dialog.ShowAsync();
         }
     }
 }
