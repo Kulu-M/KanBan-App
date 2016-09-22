@@ -51,16 +51,13 @@
                 </Style>
             </Pivot.Resources>
             <PivotItem Header="To-Do">
-                <ListBox Name="lbx_toDo">
+                <ListBox Name="lbx_toDo" DisplayMemberPath="Name">
                     <ListBox.Resources>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                             <Setter Property="Height" Value="50"/>
                         </Style>
                     </ListBox.Resources>
-                    <ListBoxItem Content="Ticket 1"/>
-                    <ListBoxItem Content="Ticket 2"/>
-                    <ListBoxItem Content="Ticket 3"/>
                 </ListBox>
             </PivotItem>
             <PivotItem Header="In-Progress">

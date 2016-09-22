@@ -82,11 +82,13 @@ namespace Frontend
             //Sende Request an server. update lbx source
         }
 
-        private void abb_add_Click(object sender, RoutedEventArgs e)
+        private async void abb_add_Click(object sender, RoutedEventArgs e)
         {
+            lbx_toDo.ItemsSource = await BoardRequests.createNewNote("lloyd@web.de", "3", 1);
+
             //Sende Request Erstelle neues Ticket, navigiere zu ticket ansicht vom ticket.
 
-            //Frame.Navigate(typeof(P_TicketView), requestResult);
+            //Frame.Navigate(typeof(P_TicketView));
         }
 
         private void abb_register_Click(object sender, RoutedEventArgs e)

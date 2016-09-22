@@ -11,7 +11,7 @@ namespace Frontend
 {
     public class BoardRequests
     {
-        public async static Task<string> createNewNote(string email, string password)
+        public async static Task<List<Note>> createNewNote(string email, string password, long? boardId)
         {
             using (var client = new HttpClient())
             {
@@ -19,13 +19,17 @@ namespace Frontend
 
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var note = new Note {Description = "FinalTestNote", Name = "SuperNote", BoardId = 1};
+                var note = new Note {Description = "", Name = "", BoardId = boardId };
                 var json = JsonConvert.SerializeObject(note);
 
                 HttpResponseMessage response =
                     await client.PostAsync(adress, new StringContent(json, Encoding.UTF8, "application/json"));
 
-                return response.ReasonPhrase;
+                var i = await response.Content.ReadAsStringAsync();
+
+                string s = i.Substring(i.IndexOf("Result = ") + 1);
+
+                return JsonConvert.DeserializeObject<List<Note>>(s);
             }
         }
     }
