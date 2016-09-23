@@ -98,6 +98,19 @@ namespace Backend.Controllers
             }
         }
 
+        // GET api/board/notes/
+        [HttpGet("notes/")]
+        public string GetAllNotesFromBoard()
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+            var boardId = Int64.Parse(Request.Headers["boardId"].ToString());
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+
+            return JsonConvert.SerializeObject(getAllNotesByBoardID(boardId));
+        }
+
         #endregion GET
 
         #region POST
@@ -142,20 +155,7 @@ namespace Backend.Controllers
                 return JsonConvert.SerializeObject(getAllNotesByBoardID(jsonNote.BoardId));
             }
         }
-
-        // POST api/board/notes/
-        [HttpPost("notes/")]
-        public string GetAllNotesFromBoard([FromBody]JObject value)
-        {
-            var username = value.SelectToken("user").SelectToken("email").ToString();
-            var password = value.SelectToken("user").SelectToken("pw").ToString();
-            var boardId = Int64.Parse(value.SelectToken("content").SelectToken("boardId").ToString());
-
-            if (!User_Authentification.validateUserKey(username, password)) return null;
-
-            return JsonConvert.SerializeObject(getAllNotesByBoardID(boardId));
-        }
-
+        
         public List<Note> getAllNotesByBoardID(long? boardId)
         {
             var noteList = new List<Note>();
