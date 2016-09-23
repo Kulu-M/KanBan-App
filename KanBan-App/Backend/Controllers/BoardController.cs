@@ -223,6 +223,25 @@ namespace Backend.Controllers
         #region DELETE
 
         // DELETE api/board/user/remove
+        [HttpDelete("note/delete")]
+        public string deleteNote([FromBody]JObject value)
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+
+            var jsonNote = JsonConvert.DeserializeObject<Note>(value.ToString());
+
+            using (var db = new APIAppDbContext())
+            {
+                db.Note.Remove(jsonNote);
+                db.SaveChanges();
+            }
+            return "Note deleted";
+        }
+
+        // DELETE api/board/user/remove
         [HttpDelete("user/remove")]
         public string removeUserFromBoard([FromBody]JObject value)
         {

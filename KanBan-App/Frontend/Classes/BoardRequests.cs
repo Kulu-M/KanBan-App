@@ -72,6 +72,33 @@ namespace Frontend
             }
         }
 
+        public async static Task<List<Note>> deleteNote(string email, string password, Note noteToDelete)
+        {
+            var json = JsonConvert.SerializeObject(noteToDelete);
+
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri("http://localhost:5000/api/board/note/delete"),
+                    Method = HttpMethod.Delete,
+                };
+
+                request.Headers.Add("username", email);
+                request.Headers.Add("pw", password);
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                var i = await response.Content.ReadAsStringAsync();
+
+                string s = i.Substring(i.IndexOf("Result = ") + 1);
+
+                return JsonConvert.DeserializeObject<List<Note>>(s);
+            }
+        }
+
         public async static void addUserToBoard(string email, string password, long? boardId, string userEmailToAdd)
         {
             if (boardId == null) return;
