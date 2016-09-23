@@ -174,7 +174,7 @@ namespace Backend.Controllers
             var password = value.SelectToken("user").SelectToken("pw").ToString();
             var boardId = Int64.Parse(value.SelectToken("content").SelectToken("boardId").ToString());
 
-            //if (!User_Authentification.validateUserKey(username, password)) return null;
+            if (!User_Authentification.validateUserKey(username, password)) return null;
 
             var userEmailList = new List<string>();
             using (var db = new APIAppDbContext())
@@ -221,6 +221,35 @@ namespace Backend.Controllers
         #endregion PUT
 
         #region DELETE
+
+        // DELETE api/board/user/remove
+        [HttpDelete("user/remove")]
+        public string removeUserFromBoard([FromBody]JObject value)
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+
+            var jsonBoardUser = JsonConvert.DeserializeObject<BoardUser>(value.ToString());
+
+            using (var db = new APIAppDbContext())
+            {
+                var existingUser = from users in db.User where users.EMail == jsonBoardUser.UserEMail select users;
+
+                if (!existingUser.Any()) return "User does not exists";
+
+                var existingBoardUser = (from search in db.BoardUser
+                                        where search.UserEMail == jsonBoardUser.UserEMail && search.BoardId == jsonBoardUser.BoardId
+                                        select search).First();
+
+                if (existingBoardUser == null) return "User has no access to Board";
+
+                db.BoardUser.Remove(existingBoardUser);
+                db.SaveChanges();
+            }
+            return "User removed from Board";
+        }
 
         #endregion DELETE
     }
