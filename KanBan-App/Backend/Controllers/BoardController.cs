@@ -62,6 +62,50 @@ namespace Backend.Controllers
 
         #endregion EXAMPLES
 
+        #region QUERIES
+
+        /// <summary>
+        /// Searches in DB for param'd userEmail and returns all board which this user has acces to
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <returns></returns>
+        public List<Board> queryBoardsForUser(string userEmail)
+        {
+            using (var db = new APIAppDbContext())
+            {
+                var boardList = new List<Board>();
+                var resultsNew = from boards in db.BoardUser
+                                 where boards.UserEMail.Equals(userEmail)
+                                 select boards.Board;
+
+                foreach (var board in resultsNew)
+                {
+                    boardList.Add(board);
+                }
+
+                if (!boardList.Any()) return null;
+
+                return boardList;
+            }
+        }
+        
+        /// <summary>
+        /// Searches in DB for param'd Board-ID and returns all Users which have access to this baord
+        /// </summary>
+        /// <param name="boardId"></param>
+        /// <returns></returns>
+        private List<BoardUser> queryBoardUsersByBoardId(long boardId)
+        {
+            List<BoardUser> boardUserList;
+            using (var db = new APIAppDbContext())
+            {
+                boardUserList = (from userIds in db.BoardUser where userIds.BoardId == boardId select userIds).ToList();
+            }
+            return boardUserList;
+        }
+
+        #endregion QUERIES
+
         #region GET
 
         // GET api/board/all/
@@ -78,26 +122,6 @@ namespace Backend.Controllers
             return JsonConvert.SerializeObject(boardList);
         }
 
-        public List<Board> queryBoardsForUser(string userEmail)
-        {
-            using (var db = new APIAppDbContext())
-            {
-                var boardList = new List<Board>();
-                var resultsNew = from boards in db.BoardUser
-                    where boards.UserEMail.Equals(userEmail)
-                    select boards.Board;
-
-                foreach (var board in resultsNew)
-                {
-                    boardList.Add(board);
-                }
-
-                if (!boardList.Any()) return null;
-                
-                return boardList;
-            }
-        }
-
         // GET api/board/notes/
         [HttpGet("notes/")]
         public string GetAllNotesFromBoard()
@@ -109,6 +133,19 @@ namespace Backend.Controllers
             if (!User_Authentification.validateUserKey(username, password)) return null;
 
             return JsonConvert.SerializeObject(getAllNotesByBoardID(boardId));
+        }
+
+        // GET api/board/users/
+        [HttpGet("users/")]
+        public string GetAllUsersFromBoard()
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+            var boardId = Int64.Parse(Request.Headers["boardId"].ToString());
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+            
+            return JsonConvert.SerializeObject(queryBoardUsersByBoardId(boardId));
         }
 
         #endregion GET
@@ -165,29 +202,10 @@ namespace Backend.Controllers
                 return noteList;
             }
         }
-
-        // POST api/board/users/
-        [HttpPost("users/")]
-        public string GetAllUsersFromBoard([FromBody]JObject value)
-        {
-            var username = value.SelectToken("user").SelectToken("email").ToString();
-            var password = value.SelectToken("user").SelectToken("pw").ToString();
-            var boardId = Int64.Parse(value.SelectToken("content").SelectToken("boardId").ToString());
-
-            if (!User_Authentification.validateUserKey(username, password)) return null;
-
-            var userEmailList = new List<string>();
-            using (var db = new APIAppDbContext())
-            {
-                userEmailList = (from userIds in db.BoardUser where userIds.BoardId == boardId select userIds.UserEMail).ToList();
-            }
-
-            return JsonConvert.SerializeObject(userEmailList);
-        }
-
+        
         // POST api/board/user/add
         [HttpPost("user/add")]
-        public string AddUserToBoard([FromBody]JObject value)
+        public List<BoardUser> AddUserToBoard([FromBody]JObject value)
         {
             var username = Request.Headers["username"].ToString();
             var password = Request.Headers["pw"].ToString();
@@ -200,18 +218,18 @@ namespace Backend.Controllers
             {
                 var existingUser = from users in db.User where users.EMail == jsonBoardUser.UserEMail select users;
 
-                if (!existingUser.Any()) return "User does not exists";
+                if (!existingUser.Any()) return null;
 
                 var existingBoardUser = from search in db.BoardUser
                     where search.UserEMail == jsonBoardUser.UserEMail && search.BoardId == jsonBoardUser.BoardId
                     select search;
 
-                if (existingBoardUser.Any()) return "User already added to Board";
+                if (existingBoardUser.Any()) return null;
 
                 db.BoardUser.Add(jsonBoardUser);
                 db.SaveChanges();
             }
-            return "User added to Board";
+            return queryBoardUsersByBoardId(jsonBoardUser.BoardId);
         }
 
         #endregion POST
@@ -267,7 +285,7 @@ namespace Backend.Controllers
                 db.BoardUser.Remove(existingBoardUser);
                 db.SaveChanges();
             }
-            return "User removed from Board";
+            return JsonConvert.SerializeObject(queryBoardUsersByBoardId(jsonBoardUser.BoardId));
         }
 
         #endregion DELETE

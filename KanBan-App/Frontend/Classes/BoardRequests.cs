@@ -11,6 +11,30 @@ namespace Frontend
 {
     public class BoardRequests
     {
+        public static async Task<List<BoardUser>> getAllUserFromBoard(string email, string password, long boardId)
+        {
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri("http://localhost:5000/api/board/users"),
+                    Method = HttpMethod.Get,
+                };
+
+                request.Headers.Add("username", email);
+                request.Headers.Add("pw", password);
+                request.Headers.Add("boardId", boardId.ToString());
+                
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                var i = await response.Content.ReadAsStringAsync();
+
+                string s = i.Substring(i.IndexOf("Result = ") + 1);
+
+                return JsonConvert.DeserializeObject<List<BoardUser>>(s);
+            }
+        }
+
         public static async Task<List<Board>> createNewBoard(string email, string password, string boardName)
         {
             var board = new Board
@@ -99,9 +123,9 @@ namespace Frontend
             }
         }
 
-        public async static void addUserToBoard(string email, string password, long? boardId, string userEmailToAdd)
+        public async static Task<List<BoardUser>> addUserToBoard(string email, string password, long? boardId, string userEmailToAdd)
         {
-            if (boardId == null) return;
+            if (boardId == null) return null;
 
             var boardUser = new BoardUser {BoardId = boardId.Value, UserEMail = userEmailToAdd };
             var json = JsonConvert.SerializeObject(boardUser);
@@ -122,7 +146,40 @@ namespace Frontend
                 HttpResponseMessage response = await client.SendAsync(request);
 
                 var i = await response.Content.ReadAsStringAsync();
-                var x = "";
+
+                string s = i.Substring(i.IndexOf("Result = ") + 1);
+
+                return JsonConvert.DeserializeObject<List<BoardUser>>(s);
+            }
+        }
+
+        public async static Task<List<BoardUser>> removeUserFromBoard(string email, string password, long? boardId, string userEmailToRemove)
+        {
+            if (boardId == null) return null;
+
+            var boardUser = new BoardUser { BoardId = boardId.Value, UserEMail = userEmailToRemove };
+            var json = JsonConvert.SerializeObject(boardUser);
+
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri("http://localhost:5000/api/board/user/remove"),
+                    Method = HttpMethod.Delete,
+                };
+
+                request.Headers.Add("username", email);
+                request.Headers.Add("pw", password);
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                var i = await response.Content.ReadAsStringAsync();
+
+                string s = i.Substring(i.IndexOf("Result = ") + 1);
+
+                return JsonConvert.DeserializeObject<List<BoardUser>>(s);
             }
         }
     }
