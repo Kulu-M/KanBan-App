@@ -37,9 +37,7 @@ namespace Frontend
 
             try
             {
-
-                result = await MyWebRequests.requestLogin(email, pw);
-
+                result = await UserRequests.loginUser(email, pw);
             }
             catch (Exception ex)
             {

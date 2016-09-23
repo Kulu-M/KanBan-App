@@ -47,7 +47,7 @@ namespace Frontend
             switch (result)
             {
                 case "You are now registered!":
-                    App._VerificationKey = await MyWebRequests.requestLogin(email, pw);
+                    App._VerificationKey = await UserRequests.loginUser(email, pw);
                     App._Email = email;
                     Frame.Navigate(typeof(P_MainPage));
                     break;

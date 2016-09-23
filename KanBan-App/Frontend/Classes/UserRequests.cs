@@ -13,6 +13,25 @@ namespace Frontend
 {
     public class UserRequests
     {
+        public static async Task<string> loginUser(string email, string password)
+        {
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri("http://localhost:5000/api/board/create"),
+                    Method = HttpMethod.Get,
+                };
+
+                request.Headers.Add("username", email);
+                request.Headers.Add("pw", password);
+
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
         public async static Task<string> registerNewUser(string email, string password)
         {
             using (var client = new HttpClient())
