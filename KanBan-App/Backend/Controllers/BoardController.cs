@@ -71,31 +71,59 @@ namespace Backend.Controllers
             var username = Request.Headers["username"].ToString();
             var password = Request.Headers["pw"].ToString();
 
-            //if (!User_Authentification.validateUserKey(username, key)) return null;
+            if (!User_Authentification.validateUserKey(username, password)) return null;
 
-            IQueryable<string> results;
-            var boardList = new List<string>();
+            var boardList = queryBoardsForUser(username);
+
+            return JsonConvert.SerializeObject(boardList);
+        }
+
+        public List<Board> queryBoardsForUser(string userEmail)
+        {
             using (var db = new APIAppDbContext())
             {
-                results = from boards in db.BoardUser where boards.UserEMail.Equals(username) select boards.Board.Name;
-                foreach (var board in results)
+                var boardList = new List<Board>();
+                var resultsNew = from boards in db.BoardUser
+                    where boards.UserEMail.Equals(userEmail)
+                    select boards.Board;
+
+                foreach (var board in resultsNew)
                 {
                     boardList.Add(board);
                 }
-                if (!boardList.Any()) return null;
 
-                var json = JsonConvert.SerializeObject(new
-                {
-                    Boards = boardList
-                });
-                return json;
+                if (!boardList.Any()) return null;
+                
+                return boardList;
             }
         }
 
         #endregion GET
 
         #region POST
-        
+
+        // POST api/board/create
+        [HttpPost("create")]
+        public string CreateBoard([FromBody]JObject value)
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+
+            var jsonBoard = JsonConvert.DeserializeObject<Board>(value.ToString());
+
+            using (var db = new APIAppDbContext())
+            {
+                db.Board.Add(jsonBoard);
+                db.BoardUser.Add(new BoardUser {BoardId = jsonBoard.Id, UserEMail = username});
+
+                db.SaveChanges();
+                
+                return JsonConvert.SerializeObject(queryBoardsForUser(username));
+            }
+        }
+
         // POST api/board/note/create
         [HttpPost("note/create")]
         public string CreateNoteInBoard([FromBody]JObject value)
@@ -137,7 +165,6 @@ namespace Backend.Controllers
                 return noteList;
             }
         }
-
 
             // POST api/board/users/
         [HttpPost("users/")]
