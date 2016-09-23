@@ -238,7 +238,7 @@ namespace Backend.Controllers
                 db.Note.Remove(jsonNote);
                 db.SaveChanges();
             }
-            return "Note deleted";
+            return JsonConvert.SerializeObject(getAllNotesByBoardID(jsonNote.BoardId));
         }
 
         // DELETE api/board/user/remove
