@@ -166,7 +166,7 @@ namespace Backend.Controllers
             }
         }
 
-            // POST api/board/users/
+        // POST api/board/users/
         [HttpPost("users/")]
         public string GetAllUsersFromBoard([FromBody]JObject value)
         {
@@ -183,6 +183,35 @@ namespace Backend.Controllers
             }
 
             return JsonConvert.SerializeObject(userEmailList);
+        }
+
+        // POST api/board/user/add
+        [HttpPost("user/add")]
+        public string AddUserToBoard([FromBody]JObject value)
+        {
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+
+            if (!User_Authentification.validateUserKey(username, password)) return null;
+
+            var jsonBoardUser = JsonConvert.DeserializeObject<BoardUser>(value.ToString());
+
+            using (var db = new APIAppDbContext())
+            {
+                var existingUser = from users in db.User where users.EMail == jsonBoardUser.UserEMail select users;
+
+                if (!existingUser.Any()) return "User does not exists";
+
+                var existingBoardUser = from search in db.BoardUser
+                    where search.UserEMail == jsonBoardUser.UserEMail && search.BoardId == jsonBoardUser.BoardId
+                    select search;
+
+                if (existingBoardUser.Any()) return "User already added to Board";
+
+                db.BoardUser.Add(jsonBoardUser);
+                db.SaveChanges();
+            }
+            return "User added to Board";
         }
 
         #endregion POST

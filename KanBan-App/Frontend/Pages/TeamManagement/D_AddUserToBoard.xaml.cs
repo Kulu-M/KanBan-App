@@ -27,8 +27,7 @@ namespace Frontend
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             if (string.IsNullOrWhiteSpace(tb_dialogResult.Text)) return;
-            App._DialogHelper = tb_dialogResult.Text;
-            //TODO Grant Usermail (if exists) access to Board
+            BoardRequests.addUserToBoard(App._Email, App._VerificationKey, 1, tb_dialogResult.Text);
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
