@@ -22,6 +22,8 @@ namespace Frontend
     /// </summary>
     public sealed partial class P_BoardView : Page
     {
+        private List<Note> loadedNotes = new List<Note>();
+
         public P_BoardView()
         {
             this.InitializeComponent();
@@ -77,15 +79,19 @@ namespace Frontend
             Frame.Navigate(typeof(P_TicketView), lbx_toDo.SelectedItem);
         }
 
-        private void abb_delete_Click(object sender, RoutedEventArgs e)
+        private async void abb_delete_Click(object sender, RoutedEventArgs e)
         {
+            if (lbx_toDo.SelectedItem == null) return;
+            var noteToDelete = (lbx_toDo.SelectedItem as Note);
+            loadedNotes = await BoardRequests.deleteNote(App._Email, App._VerificationKey, noteToDelete);
+            lbx_toDo.ItemsSource = loadedNotes;
             //Sende Request an server. update lbx source
         }
 
         private async void abb_add_Click(object sender, RoutedEventArgs e)
         {
-            lbx_toDo.ItemsSource = await BoardRequests.createNewNote("lloyd@web.de", "3", 1);
-
+            loadedNotes = await BoardRequests.createNewNote(App._Email, App._VerificationKey, 1);
+            lbx_toDo.ItemsSource = loadedNotes;
             //Sende Request Erstelle neues Ticket, navigiere zu ticket ansicht vom ticket.
 
             //Frame.Navigate(typeof(P_TicketView));

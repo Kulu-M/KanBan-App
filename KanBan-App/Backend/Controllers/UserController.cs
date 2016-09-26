@@ -92,17 +92,13 @@ namespace Backend.Controllers
             return JsonConvert.SerializeObject(userList);
         }
 
-        #endregion GET
-
-        #region POST
-
-        // POST api/user/login
-        [HttpPost("login/")]
-        public string UserLogin([FromBody]JObject value)
+        // GET api/user/login
+        [HttpGet("login/")]
+        public string UserLogin()
         {
-            var username = value.SelectToken("email").ToString();
-            var password = value.SelectToken("pw").ToString();
-  
+            var username = Request.Headers["username"].ToString();
+            var password = Request.Headers["pw"].ToString();
+
             var resultUser = new User();
             using (var db = new APIAppDbContext())
             {
@@ -117,6 +113,10 @@ namespace Backend.Controllers
             }
             return "Wrong password!";
         }
+
+        #endregion GET
+
+        #region POST
 
         // POST api/user/register/
         [HttpPost("register/")]

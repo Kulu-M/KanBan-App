@@ -28,26 +28,27 @@ namespace Frontend
         public P_TeamManagement()
         {
             this.InitializeComponent();
+        }
 
-            var userList = new ObservableCollection<User>();
-
-            userList.Add(new User{ EMail = "testmail", Password = "123", VerificationKey = "key"});
-            userList.Add(new User{ EMail = "testmail2", Password = "123", VerificationKey = "key" });
-            userList.Add(new User{ EMail = "testmail3", Password = "123", VerificationKey = "key" });
-
-            lbx_users.ItemsSource = userList;
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            App._SelectedBoardId = 1;
+            lbx_users.ItemsSource = await BoardRequests.getAllUserFromBoard(App._Email, App._VerificationKey, App._SelectedBoardId);
         }
 
         private async void abb_add_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new D_AddUserToBoard();
             await dialog.ShowAsync();
+
+            lbx_users.ItemsSource = await BoardRequests.addUserToBoard(App._Email, App._VerificationKey, 1, App._DialogHelper);
+            App._DialogHelper = "";
         }
 
-        private void abb_delete_Click(object sender, RoutedEventArgs e)
+        private async void abb_delete_Click(object sender, RoutedEventArgs e)
         {
-            if (lbx_users.SelectedItem == null) return;
-            //TODO send request to delete user and update UI
+            if (!(lbx_users.SelectedItem is BoardUser)) return;
+            lbx_users.ItemsSource = await BoardRequests.removeUserFromBoard(App._Email, App._VerificationKey, 1, ((BoardUser)lbx_users.SelectedItem).UserEMail);
         }
 
         private void abb_select_Click(object sender, RoutedEventArgs e)

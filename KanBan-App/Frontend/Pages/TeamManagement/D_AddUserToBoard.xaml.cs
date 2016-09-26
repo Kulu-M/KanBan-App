@@ -28,7 +28,6 @@ namespace Frontend
         {
             if (string.IsNullOrWhiteSpace(tb_dialogResult.Text)) return;
             App._DialogHelper = tb_dialogResult.Text;
-            //TODO Grant Usermail (if exists) access to Board
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

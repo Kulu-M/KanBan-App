@@ -25,6 +25,7 @@ namespace Frontend
         public static string _VerificationKey;
         public static string _Email;
         public static string _DialogHelper;
+        public static long _SelectedBoardId;
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
