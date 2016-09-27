@@ -8,6 +8,45 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tblk_title" HorizontalAlignment="Left" Margin="20,0,0,0" Text="KanBan-App" FontSize="34" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1"/>
+        <StackPanel Grid.Column="1" Grid.Row="2" Margin="20,10,0,0" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Name="tblk_subtitle" Text="Ticket 1" FontSize="22" Margin="0,0,10,0"/>
+                <AppBarButton Width="30" Height="40" Icon="Edit" Margin="0,-8,0,0"/>
+            </StackPanel>
+            <TextBlock FontSize="22" Margin="0,10" Text="Status"/>
+            <StackPanel Margin="-20,10,0,10" Orientation="Horizontal">
+                <RadioButton Content="To-Do"/>
+                <RadioButton Content="In Progress"/>
+                <RadioButton Content="Done"/>
+            </StackPanel>
+            <StackPanel Name="sp_todo">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="26" VerticalAlignment="Center" Text="4"/>
+                    <Button Height="50" FontSize="26" Margin="40,0,0,0" Width="200" Background="Transparent" Foreground="GreenYellow" Content="Upvote"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="26" VerticalAlignment="Center" Text="2"/>
+                    <Button Height="50" FontSize="26" Margin="40,0,0,0" Width="200" Background="Transparent" Foreground="Red" Content="Downvote"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Name="sp_inProgres" Visibility="Collapsed" BorderBrush="White" BorderThickness="1">
+                <Button Height="50" Content="Verantwortliche bearbeiten" Background="Transparent" HorizontalAlignment="Stretch"/>
+                <Button Height="50" Content="Für Ticket anmelden/abmelden" Background="Transparent" HorizontalAlignment="Stretch"/>
+            </StackPanel>
+            <TextBox Header="Beschreibung:" Margin="0,10" TextWrapping="Wrap" Height="200"/>
+            <Button Content="Ticket löschen" HorizontalAlignment="Stretch"/>
+            <Button Content="Ticket archivieren" HorizontalAlignment="Stretch" Visibility="Collapsed"/>
+        </StackPanel>
     </Grid>
 </Page>

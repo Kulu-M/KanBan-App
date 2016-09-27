@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="Frontend.P_Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Frontend.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tblk_title" HorizontalAlignment="Left" Margin="20,0,0,0" Text="KanBan-App" FontSize="34" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1"/>
+        <TextBlock Name="tblk_subtitle" Grid.Row="2" Grid.Column="1" Text="Board 1 Einstellungen" FontSize="22" Margin="20,10,10,0" VerticalAlignment="Top"/>
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="20,70,20,0">
+            <Slider FontSize="18" Header="Minimale Anzahl an Upvotes um Ticket verschieben zu können." Minimum="0" Maximum="10"/>
+            <Slider FontSize="18" Margin="0,30,0,0" Header="Minimale Anzahl an Downvotes um Ticket löschen zu können." Minimum="0" Maximum="10"/>
+            <Slider FontSize="18" Margin="0,30,0,0" Header="Maximale Anzahl aktiver In-Progress Ticket pro Nutzer." Minimum="0" Maximum="20"/>
+            <Button Margin="0,30,0,0" HorizontalAlignment="Stretch" Height="50" Content="Speichern"/>
+        </StackPanel>
+    </Grid>
+</Page>
