@@ -11,6 +11,30 @@ namespace Frontend
 {
     public class BoardRequests
     {
+        public static async Task<List<Note>> getAllNotesFromBoard(string email, string password, long boardId)
+        {
+            using (var client = new HttpClient())
+            {
+                var request = new HttpRequestMessage()
+                {
+                    RequestUri = new Uri("http://localhost:5000/api/board/notes"),
+                    Method = HttpMethod.Get,
+                };
+
+                request.Headers.Add("username", email);
+                request.Headers.Add("pw", password);
+                request.Headers.Add("boardId", boardId.ToString());
+
+                HttpResponseMessage response = await client.SendAsync(request);
+
+                var i = await response.Content.ReadAsStringAsync();
+
+                string s = i.Substring(i.IndexOf("Result = ") + 1);
+
+                return JsonConvert.DeserializeObject<List<Note>>(s);
+            }
+        }
+        
         public static async Task<List<BoardUser>> getAllUserFromBoard(string email, string password, long boardId)
         {
             using (var client = new HttpClient())
