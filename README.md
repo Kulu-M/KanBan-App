@@ -30,6 +30,7 @@ siehe Wiki
 ### Mittwoch 28.09.2016:
 
 - PP vorbereiten
+- Zeitmanagement
 - Gantt überarbeiten
 - Abschlussbericht schreiben
 - Navigation in der App fertigstellen:
