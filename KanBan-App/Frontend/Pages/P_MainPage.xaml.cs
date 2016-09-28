@@ -110,5 +110,10 @@ namespace Frontend
         {
             lbx_boards.ItemsSource = await BoardRequests.createNewBoard(App._Email, App._VerificationKey, "NewBoard");
         }
+
+        private void abb_select_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(P_BoardView));
+        }
     }
 }
