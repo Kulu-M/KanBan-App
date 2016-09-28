@@ -26,9 +26,9 @@
             </StackPanel>
             <TextBlock FontSize="22" Margin="0,10" Text="Status"/>
             <StackPanel Margin="-20,10,0,10" Orientation="Horizontal">
-                <RadioButton Content="To-Do"/>
-                <RadioButton Content="In Progress"/>
-                <RadioButton Content="Done"/>
+                <RadioButton Name="rb_toDo" Content="To-Do" Checked="rb_toDo_Checked"/>
+                <RadioButton Name="rb_inProgress" Content="In Progress" Checked="rb_inProgress_Checked"/>
+                <RadioButton Name="rb_done" Content="Done" Checked="rb_done_Checked"/>
             </StackPanel>
             <StackPanel Name="sp_todo">
                 <StackPanel Orientation="Horizontal">

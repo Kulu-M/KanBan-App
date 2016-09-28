@@ -22,8 +22,6 @@ namespace Frontend
     /// </summary>
     public sealed partial class P_BoardView : Page
     {
-        private List<Note> loadedNotes = new List<Note>();
-
         public P_BoardView()
         {
             this.InitializeComponent();
@@ -32,8 +30,10 @@ namespace Frontend
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             App._SelectedBoardId = 1;
-            loadedNotes = await BoardRequests.getAllNotesFromBoard(App._Email, App._VerificationKey, App._SelectedBoardId);
-            lbx_toDo.ItemsSource = loadedNotes;
+            App._toDoNotes = await BoardRequests.getAllNotesFromBoard(App._Email, App._VerificationKey, App._SelectedBoardId);
+            lbx_toDo.ItemsSource = App._toDoNotes;
+            lbx_inProgress.ItemsSource = App._inProgressNotes;
+            lbx_done.ItemsSource = App._doneNotes;
         }
 
         private void piv_tickets_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -83,22 +83,23 @@ namespace Frontend
 
         private void abb_edit_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(P_TicketView), lbx_toDo.SelectedItem);
+            var param = new { from = 0, note = lbx_toDo.SelectedItem };
+            Frame.Navigate(typeof(P_TicketView), param);
         }
 
         private async void abb_delete_Click(object sender, RoutedEventArgs e)
         {
             if (lbx_toDo.SelectedItem == null) return;
             var noteToDelete = (lbx_toDo.SelectedItem as Note);
-            loadedNotes = await BoardRequests.deleteNote(App._Email, App._VerificationKey, noteToDelete);
-            lbx_toDo.ItemsSource = loadedNotes;
+            App._toDoNotes = await BoardRequests.deleteNote(App._Email, App._VerificationKey, noteToDelete);
+            lbx_toDo.ItemsSource = App._toDoNotes;
             //Sende Request an server. update lbx source
         }
 
         private async void abb_add_Click(object sender, RoutedEventArgs e)
         {
-            loadedNotes = await BoardRequests.createNewNote(App._Email, App._VerificationKey, 1);
-            lbx_toDo.ItemsSource = loadedNotes;
+            App._toDoNotes = await BoardRequests.createNewNote(App._Email, App._VerificationKey, 1);
+            lbx_toDo.ItemsSource = App._toDoNotes;
             //Sende Request Erstelle neues Ticket, navigiere zu ticket ansicht vom ticket.
 
             //Frame.Navigate(typeof(P_TicketView));
@@ -111,7 +112,8 @@ namespace Frontend
 
         private void abb_view_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(P_TicketView), lbx_inProgress.SelectedItem);
+            var param = new { from = 1, note = lbx_inProgress.SelectedItem };
+            Frame.Navigate(typeof(P_TicketView), param);
         }
 
         private async void abb_assign_Click(object sender, RoutedEventArgs e)
@@ -122,7 +124,8 @@ namespace Frontend
 
         private void abb_viewDone_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(P_TicketView), lbx_done.SelectedItem);
+            var param = new { from = 2, note = lbx_done.SelectedItem };
+            Frame.Navigate(typeof(P_TicketView), param);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -27,6 +28,12 @@ namespace Frontend
         public static string _Email;
         public static string _DialogHelper;
         public static long _SelectedBoardId;
+
+        public static ObservableCollection<Note> _loadedNotes = new ObservableCollection<Note>();
+        public static ObservableCollection<Note> _toDoNotes = new ObservableCollection<Note>();
+        public static ObservableCollection<Note> _inProgressNotes = new ObservableCollection<Note>();
+        public static ObservableCollection<Note> _doneNotes = new ObservableCollection<Note>();
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -85,7 +92,7 @@ namespace Frontend
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(P_MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(P_Login), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

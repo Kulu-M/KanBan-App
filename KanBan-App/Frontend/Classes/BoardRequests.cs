@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -11,7 +12,7 @@ namespace Frontend
 {
     public class BoardRequests
     {
-        public static async Task<List<Note>> getAllNotesFromBoard(string email, string password, long boardId)
+        public static async Task<ObservableCollection<Note>> getAllNotesFromBoard(string email, string password, long boardId)
         {
             using (var client = new HttpClient())
             {
@@ -31,7 +32,13 @@ namespace Frontend
 
                 string s = i.Substring(i.IndexOf("Result = ") + 1);
 
-                return JsonConvert.DeserializeObject<List<Note>>(s);
+                ObservableCollection<Note> obsCollection = new ObservableCollection<Note>();
+                 var list = JsonConvert.DeserializeObject<List<Note>>(s);
+                foreach (var note in list)
+                {
+                    obsCollection.Add(note);
+                }
+                return obsCollection;
             }
         }
         
@@ -91,10 +98,10 @@ namespace Frontend
             }
         }
 
-        public async static Task<List<Note>> createNewNote(string email, string password, long? boardId)
+        public async static Task<ObservableCollection<Note>> createNewNote(string email, string password, long? boardId)
         {
-            var note = new Note { Description = "", Name = "Bitte Namen eingeben", BoardId = boardId };
-            var json = JsonConvert.SerializeObject(note);
+            var newNote = new Note { Description = "", Name = "Bitte Namen eingeben", BoardId = boardId };
+            var json = JsonConvert.SerializeObject(newNote);
 
             using (var client = new HttpClient())
             {
@@ -115,11 +122,17 @@ namespace Frontend
 
                 string s = i.Substring(i.IndexOf("Result = ") + 1);
 
-                return JsonConvert.DeserializeObject<List<Note>>(s);
+                ObservableCollection<Note> obsCollection = new ObservableCollection<Note>();
+                var list = JsonConvert.DeserializeObject<List<Note>>(s);
+                foreach (var note in list)
+                {
+                    obsCollection.Add(note);
+                }
+                return obsCollection;
             }
         }
 
-        public async static Task<List<Note>> deleteNote(string email, string password, Note noteToDelete)
+        public async static Task<ObservableCollection<Note>> deleteNote(string email, string password, Note noteToDelete)
         {
             var json = JsonConvert.SerializeObject(noteToDelete);
 
@@ -142,7 +155,13 @@ namespace Frontend
 
                 string s = i.Substring(i.IndexOf("Result = ") + 1);
 
-                return JsonConvert.DeserializeObject<List<Note>>(s);
+                ObservableCollection<Note> obsCollection = new ObservableCollection<Note>();
+                var list = JsonConvert.DeserializeObject<List<Note>>(s);
+                foreach (var note in list)
+                {
+                    obsCollection.Add(note);
+                }
+                return obsCollection;
             }
         }
 

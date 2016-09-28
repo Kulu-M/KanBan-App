@@ -61,7 +61,7 @@
                 </ListBox>
             </PivotItem>
             <PivotItem Header="In-Progress">
-                <ListBox Name="lbx_inProgress">
+                <ListBox Name="lbx_inProgress" DisplayMemberPath="Name">
                     <ListBox.Resources>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -74,7 +74,7 @@
                 </ListBox>
             </PivotItem>
             <PivotItem Header="Done">
-                <ListBox Name="lbx_done">
+                <ListBox Name="lbx_done" DisplayMemberPath="Name">
                     <ListBox.Resources>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
