@@ -29,6 +29,13 @@ namespace Frontend
             this.InitializeComponent();
         }
 
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            App._SelectedBoardId = 1;
+            loadedNotes = await BoardRequests.getAllNotesFromBoard(App._Email, App._VerificationKey, App._SelectedBoardId);
+            lbx_toDo.ItemsSource = loadedNotes;
+        }
+
         private void piv_tickets_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (piv_tickets.SelectedIndex)
