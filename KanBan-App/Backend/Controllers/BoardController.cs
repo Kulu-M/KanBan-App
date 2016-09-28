@@ -240,7 +240,7 @@ namespace Backend.Controllers
 
         #region DELETE
 
-        // DELETE api/board/user/remove
+        // DELETE api/board/note/delete
         [HttpDelete("note/delete")]
         public string deleteNote([FromBody]JObject value)
         {
