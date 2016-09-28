@@ -29,34 +29,36 @@ namespace Frontend
             this.InitializeComponent();
         }
 
-        private async void b_login_Click(object sender, RoutedEventArgs e)
+        private void b_login_Click(object sender, RoutedEventArgs e)
         {
-            string email = tbx_email.Text;
-            string pw = pb_pw.Password;
-            string result = string.Empty;
+            Frame.Navigate(typeof(P_MainPage));
 
-            try
-            {
-                result = await UserRequests.loginUser(email, pw);
-            }
-            catch (Exception ex)
-            {
-                tblk_error.Text = ex.Message;
-                return;
-            }
+            //string email = tbx_email.Text;
+            //string pw = pb_pw.Password;
+            //string result = string.Empty;
 
-            switch (result)
-            {
-                case "User not registered!":
-                case "Wrong password!":
-                    tblk_error.Text = result;
-                    break;
-                default:
-                    App._VerificationKey = result;
-                    App._Email = email;
-                    Frame.Navigate(typeof(P_MainPage));
-                    break;
-            }
+            //try
+            //{
+            //    result = await UserRequests.loginUser(email, pw);
+            //}
+            //catch (Exception ex)
+            //{
+            //    tblk_error.Text = ex.Message;
+            //    return;
+            //}
+
+            //switch (result)
+            //{
+            //    case "User not registered!":
+            //    case "Wrong password!":
+            //        tblk_error.Text = result;
+            //        break;
+            //    default:
+            //        App._VerificationKey = result;
+            //        App._Email = email;
+            //        Frame.Navigate(typeof(P_MainPage));
+            //        break;
+            //}
         }
 
         private void tbx_email_and_pb_pw_TextChanged<T>(object sender, T e)
@@ -88,6 +90,12 @@ namespace Frontend
         private void b_registrieren_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(P_Register));
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbx_email.Text = App._Email;
+            pb_pw.Password = "3";
         }
     }
 }
