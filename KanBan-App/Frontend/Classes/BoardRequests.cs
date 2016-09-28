@@ -79,7 +79,6 @@ namespace Frontend
                 request.Headers.Add("username", email);
                 request.Headers.Add("pw", password);
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
                 request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.SendAsync(request);

@@ -87,20 +87,28 @@ namespace Frontend
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/Timmy's Boards.txt"));
 
-            using (var inputStream = await file.OpenReadAsync())
-            using (var classicStream = inputStream.AsStreamForRead())
-            using (var streamReader = new StreamReader(classicStream))
-            {
-                data = streamReader.ReadToEnd();
-            }
-            var test = JsonConvert.DeserializeObject(data);
-            
-            lbx_boards.ItemsSource = test;
+            lbx_boards.ItemsSource = await BoardRequests.createNewBoard(App._Email, App._VerificationKey, "");
 
-            lbx_boards.DisplayMemberPath = "[0][0]";
+            //var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Data/Timmy's Boards.txt"));
 
+            //using (var inputStream = await file.OpenReadAsync())
+            //using (var classicStream = inputStream.AsStreamForRead())
+            //using (var streamReader = new StreamReader(classicStream))
+            //{
+            //    data = streamReader.ReadToEnd();
+            //}
+            //var test = JsonConvert.DeserializeObject(data);
+
+            //lbx_boards.ItemsSource = test;
+
+            ////lbx_boards.DisplayMemberPath = "[0][0]";
+
+        }
+
+        private async void abb_add_Click(object sender, RoutedEventArgs e)
+        {
+            lbx_boards.ItemsSource = await BoardRequests.createNewBoard(App._Email, App._VerificationKey, "NewBoard");
         }
     }
 }

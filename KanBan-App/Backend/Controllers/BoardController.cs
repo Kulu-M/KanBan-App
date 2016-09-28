@@ -65,7 +65,7 @@ namespace Backend.Controllers
         #region QUERIES
 
         /// <summary>
-        /// Searches in DB for param'd userEmail and returns all board which this user has acces to
+        /// Searches in DB for param'd userEmail and returns all board which this user has access to
         /// </summary>
         /// <param name="userEmail"></param>
         /// <returns></returns>

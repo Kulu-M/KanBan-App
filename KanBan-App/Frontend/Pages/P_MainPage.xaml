@@ -18,7 +18,7 @@
             </CommandBar.SecondaryCommands>
             <AppBarButton Name="abb_select" Icon="Accept" Label="Auswählen"/>
             <AppBarButton Name="abb_delete" Icon="Delete" Label="Löschen" Click="abb_delete_Click"/>
-            <AppBarButton Name="abb_add" Icon="Add" Label="Hinzufügen"/>
+            <AppBarButton Name="abb_add" Icon="Add" Label="Hinzufügen" Click="abb_add_Click"/>
         </CommandBar>
     </Page.BottomAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -34,14 +34,13 @@
         </Grid.RowDefinitions>
         <TextBlock x:Name="tblk_title" HorizontalAlignment="Left" Margin="20,0,0,0" Text="KanBan-App" FontSize="34" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1"/>
         <TextBlock Name="tblk_subtitle" Grid.Column="1" Grid.Row="2" Text="Board auswählen:" FontSize="22" Margin="20,10,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name="lbx_boards" Grid.Column="1" Grid.Row="2" Margin="20,50">
+        <ListBox x:Name="lbx_boards" Grid.Column="1" Grid.Row="2" Margin="20,50" DisplayMemberPath="Name">
             <ListBox.Resources>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Height" Value="50"/>
                     <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
             </ListBox.Resources>
-            <ListBoxItem Content="hahahaha"/>
         </ListBox>
     </Grid>
 </Page>
