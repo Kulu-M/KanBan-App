@@ -29,6 +29,8 @@ namespace Frontend
         public static string _DialogHelper;
         public static long _SelectedBoardId;
 
+        public static bool _loaded = false;
+
         public static ObservableCollection<Note> _loadedNotes = new ObservableCollection<Note>();
         public static ObservableCollection<Note> _toDoNotes = new ObservableCollection<Note>();
         public static ObservableCollection<Note> _inProgressNotes = new ObservableCollection<Note>();

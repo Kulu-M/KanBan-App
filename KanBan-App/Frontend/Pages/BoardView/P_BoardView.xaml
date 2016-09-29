@@ -15,7 +15,7 @@
                 </Style>
             </CommandBar.Resources>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Label="Team verwalten"/>
+                <AppBarButton Label="Team verwalten" Click="AppBarButton_Click"/>
                 <AppBarButton Label="Einstellungen"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton Name="abb_edit" Icon="Edit" Label="Bearbeiten" Click="abb_edit_Click"/>

@@ -24,7 +24,7 @@ namespace Frontend
     {
         private object navParam = null;
         public int from = -1;
-        public Note note = null;
+        public Note note;
 
         public P_TicketView()
         {
@@ -66,11 +66,11 @@ namespace Frontend
             switch (from)
             {
                 case 1:
-                    App._inProgressNotes.Remove(note);
+                    App._inProgressNotes.Remove((from n in App._inProgressNotes where n.Id == note.Id select n).First());
                     App._toDoNotes.Add(note);
                     break;
                 case 2:
-                    App._doneNotes.Remove(note);
+                    App._doneNotes.Remove((from n in App._doneNotes where n.Id == note.Id select n).First());
                     App._toDoNotes.Add(note);
                     break;
                 default:
@@ -83,12 +83,12 @@ namespace Frontend
             switch (from)
             {
                 case 0:
-                    App._toDoNotes.Remove(note);
+                    App._toDoNotes.Remove((from n in App._toDoNotes where n.Id == note.Id select n).First());
                     App._inProgressNotes.Add(note);
                     break;
                 case 2:
-                    App._toDoNotes.Remove(note);
-                    App._doneNotes.Add(note);
+                    App._doneNotes.Remove((from n in App._doneNotes where n.Id == note.Id select n).First());
+                    App._inProgressNotes.Add(note);
                     break;
                 default:
                     break;
@@ -100,11 +100,11 @@ namespace Frontend
             switch (from)
             {
                 case 0:
-                    App._toDoNotes.Remove(note);
+                    App._toDoNotes.Remove((from n in App._toDoNotes where n.Id == note.Id select n).First());
                     App._doneNotes.Add(note);
                     break;
                 case 1:
-                    App._inProgressNotes.Remove(note);
+                    App._inProgressNotes.Remove((from n in App._inProgressNotes where n.Id == note.Id select n).First());
                     App._doneNotes.Add(note);
                     break;
                 default:

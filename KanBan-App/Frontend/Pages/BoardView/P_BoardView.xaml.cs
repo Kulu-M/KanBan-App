@@ -22,6 +22,7 @@ namespace Frontend
     /// </summary>
     public sealed partial class P_BoardView : Page
     {
+        
         public P_BoardView()
         {
             this.InitializeComponent();
@@ -29,8 +30,20 @@ namespace Frontend
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (App._loaded) return;
             App._SelectedBoardId = 1;
             App._toDoNotes = await BoardRequests.getAllNotesFromBoard(App._Email, App._VerificationKey, App._SelectedBoardId);
+            updateItemSources();
+            App._loaded = true;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            updateItemSources();
+        }
+
+        private void updateItemSources()
+        {
             lbx_toDo.ItemsSource = App._toDoNotes;
             lbx_inProgress.ItemsSource = App._inProgressNotes;
             lbx_done.ItemsSource = App._doneNotes;
@@ -126,6 +139,11 @@ namespace Frontend
         {
             var param = new { from = 2, note = lbx_done.SelectedItem };
             Frame.Navigate(typeof(P_TicketView), param);
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(P_TeamManagement));
         }
     }
 }
